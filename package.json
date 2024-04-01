@@ -16,6 +16,7 @@
     "format": "prettier --write src"
   },
   "dependencies": {
+    "@metamask/sdk": "^0.18.1",
     "pinia": "^2.1.7",
     "vite-plugin-eslint": "^1.8.1",
     "vite-svg-loader": "^5.1.0",

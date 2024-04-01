@@ -4,9 +4,11 @@
 			<Header class="layout__header" />
 
 			<main class="layout__main">
-				<transition>
-					<router-view class="layout__page"></router-view>
-				</transition>
+				<router-view v-slot="{ Component }">
+					<transition>
+						<component :is="Component" />
+					</transition>
+				</router-view>
 			</main>
 		</resize>
 	</div>
@@ -15,6 +17,10 @@
 <script setup lang="ts">
 import Resize from '@/components/layout/Resize.vue'
 import Header from '@/components/layout/Header.vue'
+import { useWalletStore } from '@/store/wallet'
+const walletStore = useWalletStore()
+
+walletStore.init()
 </script>
 
 <style scoped lang="scss">

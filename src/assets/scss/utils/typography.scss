@@ -1,52 +1,23 @@
-//@mixin i-14-700() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(14);
-//  font-weight: 700;
-//}
-//@mixin i-16-u() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(16);
-//  text-transform: uppercase;
-//}
-//@mixin i-16-300() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(16);
-//  font-weight: 300;
-//}
-//@mixin i-16() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(16);
-//}
-//@mixin i-16-500-u() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(16);
-//  font-weight: 500;
-//  text-transform: uppercase;
-//}
-//@mixin i-20-600() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(20);
-//  font-weight: 600;
-//}
-//@mixin i-20() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(20);
-//}
-//@mixin i-24-700() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(24);
-//  font-weight: 700;
-//}
-//@mixin i-24() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(24);
-//}
-//@mixin i-32-600() {
-//  font-family: $ff-Raleway-Sans;
-//  font-size: em(32);
-//  font-weight: 600;
-//}
-//@mixin p-16() {
-//  font-family: $ff-Nunito-Sans;
-//  font-size: em(16);
-//}
+@mixin dm-8-400() {
+  font-size: em(8);
+  font-weight: 400;
+  line-height: em(10, 8);
+}
+
+@mixin dm-12-400() {
+  font-size: em(12);
+  font-weight: 400;
+  line-height: em(20, 14);
+}
+
+@mixin dm-14-400() {
+  font-size: em(14);
+  font-weight: 400;
+  line-height: em(20, 14);
+}
+
+@mixin dm-36-500() {
+  font-size: em(36);
+  font-weight: 500;
+  line-height: em(43, 36);
+}
