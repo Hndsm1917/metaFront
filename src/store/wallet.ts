@@ -38,10 +38,10 @@ export const useWalletStore = defineStore('wallet', {
 			this.ethWallet = res[0]
 		},
 
-		async fetchPersonalSign() {
+		async fetchPersonalSign(challenge: string, address: string) {
 			const res = await this.ethereum.request({
 				method: 'personal_sign',
-				params: ['0x1a3F', `${this.ethWallet}`]
+				params: [challenge, address]
 			})
 
 			this.ethPersonalSign = res[0]

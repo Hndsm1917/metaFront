@@ -9,7 +9,11 @@
 					@click="method"
 					type="button"
 				>
-					<span class="header__font header__font--btn"> {{ text }} </span>
+					<transition name="slide-fade" mode="out-in">
+						<div :key="text" class="header__font header__font--btn">
+							{{ text }}
+						</div>
+					</transition>
 				</button>
 			</div>
 		</div>
@@ -32,18 +36,18 @@ const controllers = computed(() => {
 		{
 			id: 1,
 			isCheck: isCheckSign.value,
-			ethValue: ethPersonalSign.value,
+			ethValue: ethPersonalSign.value ?? '',
 			textDefault: 'Sign Message',
-			textChecked: ethPersonalSign.value || '0x1a3F',
+			textChecked: '0x1a3F',
 			action: 'sign',
 			canShow: Boolean(ethWallet.value)
 		},
 		{
 			id: 2,
 			isCheck: isCheckWalletAddress.value,
-			ethValue: ethWallet.value,
+			ethValue: ethWallet.value ?? '',
 			textDefault: 'Connect Wallet',
-			textChecked: ethWallet.value,
+			textChecked: 'wallet address',
 			action: 'walletAddress',
 			canShow: true
 		}
@@ -52,7 +56,7 @@ const controllers = computed(() => {
 		.map((controller) => {
 			let text
 			if (controller.isCheck) {
-				text = controller.textChecked
+				text = formatWalletString(controller.ethValue)
 			} else {
 				if (controller.ethValue) {
 					text = controller.textChecked
@@ -64,26 +68,36 @@ const controllers = computed(() => {
 			return {
 				id: controller.id,
 				text,
-				method: () => toggleState(controller.action)
+				method: () => toggleState(controller)
 			}
 		})
 })
 
-function toggleState(action) {
-	if (action === 'walletAddress') {
+function toggleState(controller) {
+	if (controller.action === 'walletAddress') {
 		if (!ethWallet.value) {
 			walletStore.fetchEthRequestAccounts()
 			return
 		}
 		isCheckWalletAddress.value = !isCheckWalletAddress.value
 	}
-	if (action === 'sign') {
+
+	if (controller.action === 'sign') {
 		if (!ethPersonalSign.value) {
-			walletStore.fetchPersonalSign()
-			return
+			walletStore.fetchPersonalSign(controller.textChecked, ethWallet.value)
 		}
 		isCheckSign.value = !isCheckSign.value
 	}
+}
+
+function formatWalletString(hexString: string, startLength = 4, endLength = 4) {
+	if (hexString.length > startLength + endLength + 2) {
+		const start = hexString.substring(0, startLength + 2)
+		const end = hexString.substring(hexString.length - endLength)
+
+		return `${start}...${end}`
+	}
+	return hexString
 }
 </script>
 

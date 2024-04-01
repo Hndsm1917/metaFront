@@ -18,6 +18,7 @@
 import Resize from '@/components/layout/Resize.vue'
 import Header from '@/components/layout/Header.vue'
 import { useWalletStore } from '@/store/wallet'
+
 const walletStore = useWalletStore()
 
 walletStore.init()
