@@ -28,7 +28,6 @@ export const useWalletStore = defineStore('wallet', {
 
 			sdk.init().then(() => {
 				this.ethereum = sdk.getProvider()
-				this.fetchEthRequestAccounts()
 			})
 		},
 

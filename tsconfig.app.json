@@ -11,8 +11,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
-    "baseUrl": "./metaFront",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     }

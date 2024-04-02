@@ -30,5 +30,9 @@ walletStore.init()
 		width: 100%;
 		height: em(81);
 	}
+
+	&__main {
+		margin-top: em(4);
+	}
 }
 </style>

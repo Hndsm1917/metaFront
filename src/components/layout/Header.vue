@@ -119,8 +119,7 @@ function formatWalletString(hexString: string, startLength = 4, endLength = 4) {
 	}
 
 	&__content {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
+		display: flex;
 		gap: em(25);
 	}
 

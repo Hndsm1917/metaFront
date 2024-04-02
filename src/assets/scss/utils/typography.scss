@@ -2,6 +2,7 @@
   font-size: em(8);
   font-weight: 400;
   line-height: em(10, 8);
+  text-transform: uppercase;
 }
 
 @mixin dm-12-400() {
@@ -20,4 +21,5 @@
   font-size: em(36);
   font-weight: 500;
   line-height: em(43, 36);
+  letter-spacing: em(0.02);
 }
