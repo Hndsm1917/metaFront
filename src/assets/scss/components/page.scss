@@ -1,0 +1,44 @@
+.page {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: em($container-max-width);
+  }
+
+
+
+  &__block {
+    display: flex;
+    width: 100%;
+    background: $dark-gray;
+    border-radius: em(8);
+    padding: em(14) em(16);
+
+
+    &--between {
+      justify-content: space-between;
+    }
+  }
+
+  &__switch {
+    background: $main;
+    border-radius: em(50);
+    overflow: hidden;
+    height: em(23);
+    padding: 0 em(5);
+  }
+
+
+  &__font {
+    &--h1 {
+      @include dm-36-500();
+      color: $white;
+    }
+
+    &--text {
+      @include dm-14-400();
+      color: $light-gray;
+    }
+  }
+}

@@ -23,11 +23,7 @@ import { onBeforeMount } from 'vue'
 const walletStore = useWalletStore()
 
 onBeforeMount(() => {
-	walletStore.init().then(() => {
-		if (window.localStorage.getItem('isWalletConnected') === 'true') {
-			walletStore.fetchEthRequestAccounts()
-		}
-	})
+	walletStore.init()
 })
 </script>
 
@@ -40,6 +36,7 @@ onBeforeMount(() => {
 
 	&__main {
 		margin-top: em(4);
+		margin-bottom: em(120);
 	}
 }
 </style>

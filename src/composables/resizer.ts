@@ -19,8 +19,8 @@ export const projectParams: ProjectParams = {
 		name: 'desktop',
 		width: 1440,
 		height: 746,
-		minWidth: 790,
-		minHeight: 320,
+		minWidth: 0,
+		minHeight: 0,
 		fontSize: 16,
 		maxWidth: 18
 	},

@@ -29,8 +29,6 @@ class EthereumService {
 			throw new Error('Expected an array of strings from eth_requestAccounts')
 		}
 
-		window.localStorage.setItem('isWalletConnected', 'true')
-
 		return response
 	}
 

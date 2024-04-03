@@ -28,12 +28,12 @@
 </template>
 
 <script setup lang="ts">
-type CollectionItem = number | string | Record<string, any>
+import type { Heading, TableField, TableRow } from '@/types/types'
 
 const props = defineProps<{
-	tableHeading: CollectionItem[]
-	tableFields: CollectionItem[]
-	tableData: CollectionItem[]
+	tableHeading: Heading[]
+	tableFields: TableField[]
+	tableData: TableRow[]
 }>()
 </script>
 

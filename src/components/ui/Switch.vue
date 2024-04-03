@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-type CollectionItem = number | string | Record<string, any>
+import type { CollectionItem } from '@/types/types'
 
 const props = defineProps<{
 	collection: Array<CollectionItem>

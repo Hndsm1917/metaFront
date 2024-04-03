@@ -108,7 +108,6 @@ function buttonsController(action: string) {
 }
 
 function formatWalletString(hexString: string, startLength = 4, endLength = 4) {
-	console.log(hexString)
 	return hexString.length > startLength + endLength + 2
 		? `${hexString.substring(0, startLength + 2)}...${hexString.substring(hexString.length - endLength)}`
 		: hexString

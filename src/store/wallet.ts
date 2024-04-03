@@ -1,15 +1,17 @@
 import { defineStore } from 'pinia'
 import { ethereumService } from '@/services/ethereum'
+import { useStorage } from '@vueuse/core'
+import type { RemovableRef } from '@vueuse/core'
 
 interface State {
-	ethWallet: null | string
-	ethPersonalSign: null | string
+	ethWallet: RemovableRef<string>
+	ethPersonalSign: RemovableRef<string>
 }
 
 export const useWalletStore = defineStore('wallet', {
 	state: (): State => ({
-		ethWallet: null,
-		ethPersonalSign: null
+		ethWallet: useStorage('ethWallet', ''),
+		ethPersonalSign: useStorage('ethPersonalSign', '')
 	}),
 
 	actions: {

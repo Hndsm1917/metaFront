@@ -1,8 +1,13 @@
-import type { FiltersLiterals } from '@/types/types'
+import type { FiltersLiterals, Heading, TableField } from '@/types/types'
 
 interface FilterOption {
 	name: string
 	sortBy: FiltersLiterals
+}
+
+interface TableFields {
+	headings: Heading[]
+	fields: TableField[]
 }
 
 export const tableFilters: FilterOption[] = [
@@ -20,7 +25,7 @@ export const tableFilters: FilterOption[] = [
 	}
 ]
 
-export const tableFields = {
+export const tableFields: TableFields = {
 	headings: [
 		'↑#',
 		'NAME',
