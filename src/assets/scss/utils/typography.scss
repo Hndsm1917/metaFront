@@ -5,6 +5,12 @@
   text-transform: uppercase;
 }
 
+@mixin dm-10-400() {
+  font-size: em(10);
+  font-weight: 400;
+  line-height: em(20, 10);
+}
+
 @mixin dm-12-400() {
   font-size: em(12);
   font-weight: 400;

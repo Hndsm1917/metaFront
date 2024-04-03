@@ -16,9 +16,13 @@
 					@selected="setTableFilter"
 				/>
 			</div>
-			<div class="page__table">
-				{{ formattedEthEntities }}
-			</div>
+
+			<Table
+				class="page__table"
+				:table-heading="tableFields.headings"
+				:table-fields="tableFields.fields"
+				:table-data="formattedEthEntities"
+			></Table>
 		</div>
 	</div>
 </template>
@@ -26,9 +30,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import Switch from '@/components/ui/Switch.vue'
-import tableFilters from '@/configs/tableFilters'
+import { tableFilters, tableFields } from '@/configs/tableParams'
 import { useEthRatingStore } from '@/store/ethRating'
 import { storeToRefs } from 'pinia'
+import Table from '@/components/ui/Table.vue'
 
 const ethRatingStore = useEthRatingStore()
 const { formattedEthEntities, currentFilter } = storeToRefs(ethRatingStore)
@@ -81,6 +86,10 @@ function setTableFilter(index: number) {
 		overflow: hidden;
 		height: em(23);
 		padding: 0 em(5);
+	}
+
+	&__table {
+		margin-top: em(10);
 	}
 
 	&__font {

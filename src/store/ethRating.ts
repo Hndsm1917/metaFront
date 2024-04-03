@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { fetchEntities } from '@/services/ethRewardsService'
+import { fetchEntities, fetchHistory } from '@/services/ethRewardsService'
 import type { Entity } from '@/types/apiTypes'
 import type { FiltersLiterals } from '@/types/types'
 
 interface State {
 	ethEntities: null | Entity[]
 	currentPage: number
+	currentEthPrice: number
 	currentFilter: FiltersLiterals
 }
 
@@ -17,20 +18,27 @@ export const useEthRatingStore = defineStore('ethRating', {
 	state: (): State => ({
 		ethEntities: null,
 		currentPage: 0,
-		currentFilter: 'apr'
+		currentFilter: 'apr',
+		currentEthPrice: 0
 	}),
 
 	getters: {
-		formattedEthEntities: ({ ethEntities, currentFilter }): void[] | FormattedEntities[] => {
+		formattedEthEntities: ({
+			ethEntities,
+			currentFilter,
+			currentEthPrice
+		}): void[] | FormattedEntities[] => {
 			if (ethEntities) {
-				return ethEntities.map((item: any): any => {
+				return ethEntities.map((item: any, index): any => {
 					return {
+						id: index + 1,
 						name: item.name,
-						staked: item.staked,
-						apr: item[currentFilter] * 100,
-						executedRewards: item.executed_rewards,
-						consensusRewards: item.consensus_rewards,
-						producedBlocks: item.produced_blocks
+						staked: `${item.staked} ETH`,
+						stakedUsdt: `$${item.staked * currentEthPrice}`,
+						apr: `${item[currentFilter] * 100}%`,
+						executedRewards: `${item.executed_rewards} ETH`,
+						consensusRewards: `${item.consensus_rewards} ETH`,
+						producedBlocks: `${item.produced_blocks}%`
 					}
 				})
 			}
@@ -46,8 +54,15 @@ export const useEthRatingStore = defineStore('ethRating', {
 				limit: 10,
 				sort_by: sorting
 			})
+			await this.getHistory()
 
 			this.ethEntities = items
+		},
+
+		async getHistory() {
+			const { eth_price } = await fetchHistory()
+
+			this.currentEthPrice = +eth_price.current
 		}
 	}
 })
