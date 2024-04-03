@@ -41,7 +41,8 @@ export const tableFields: TableFields = {
 			theme: 'id'
 		},
 		{
-			fieldSelector: 'name'
+			fieldSelector: 'name',
+			theme: 'default'
 		},
 		{
 			fieldSelector: 'staked',
@@ -53,13 +54,16 @@ export const tableFields: TableFields = {
 			theme: 'accent'
 		},
 		{
-			fieldSelector: 'executedRewards'
+			fieldSelector: 'executedRewards',
+			theme: 'default'
 		},
 		{
-			fieldSelector: 'consensusRewards'
+			fieldSelector: 'consensusRewards',
+			theme: 'default'
 		},
 		{
-			fieldSelector: 'producedBlocks'
+			fieldSelector: 'producedBlocks',
+			theme: 'default'
 		}
 	]
 }

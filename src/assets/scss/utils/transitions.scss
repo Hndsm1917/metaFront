@@ -11,3 +11,19 @@
   transform: scale(0.8);
   opacity: 0;
 }
+
+.row-move,
+.row-enter-active,
+.row-leave-active {
+  transition: all 0.5s ease;
+}
+
+.row-enter-from,
+.row-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.row-leave-active {
+  position: absolute;
+}
