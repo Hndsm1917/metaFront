@@ -6,7 +6,7 @@
 					v-for="{ id, method, text } in controllers"
 					:key="id"
 					class="header__button"
-					@click="method"
+					@click="buttonsController(method)"
 					type="button"
 				>
 					<transition name="slide-fade" mode="out-in">
@@ -22,8 +22,19 @@
 
 <script setup lang="ts">
 import { useWalletStore } from '@/store/wallet'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import type { Ref } from 'vue'
 import { storeToRefs } from 'pinia'
+
+interface HeaderButtonController {
+	id: number
+	isCheck: Ref<boolean>
+	ethValue: Ref<string | null>
+	textDefault: string
+	textBeforeChecked: string
+	action: 'sign' | 'walletAddress'
+	canShow: boolean
+}
 
 const walletStore = useWalletStore()
 const { ethWallet, ethPersonalSign } = storeToRefs(walletStore)
@@ -32,72 +43,75 @@ const isCheckSign = ref(false)
 const isCheckWalletAddress = ref(false)
 
 const controllers = computed(() => {
-	return [
+	const baseControllers: HeaderButtonController[] = [
 		{
 			id: 1,
-			isCheck: isCheckSign.value,
-			ethValue: ethPersonalSign.value ?? '',
+			isCheck: isCheckSign,
+			ethValue: ethPersonalSign,
 			textDefault: 'Sign Message',
-			textChecked: '0x1a3F',
+			textBeforeChecked: 'signature data',
 			action: 'sign',
 			canShow: Boolean(ethWallet.value)
 		},
 		{
 			id: 2,
-			isCheck: isCheckWalletAddress.value,
-			ethValue: ethWallet.value ?? '',
+			isCheck: isCheckWalletAddress,
+			ethValue: ethWallet,
 			textDefault: 'Connect Wallet',
-			textChecked: 'wallet address',
+			textBeforeChecked: 'wallet address',
 			action: 'walletAddress',
 			canShow: true
 		}
 	]
+
+	return baseControllers
 		.filter((controller) => controller.canShow)
 		.map((controller) => {
-			let text
-			if (controller.isCheck) {
-				text = formatWalletString(controller.ethValue)
-			} else {
-				if (controller.ethValue) {
-					text = controller.textChecked
-				} else {
+			let text = ''
+
+			switch (true) {
+				case !controller.ethValue.value:
 					text = controller.textDefault
-				}
+					break
+
+				case controller.ethValue.value && !controller.isCheck.value:
+					text = controller.textBeforeChecked
+					break
+
+				case controller.ethValue.value && controller.isCheck.value:
+					text = formatWalletString(controller.ethValue.value)
+					break
 			}
 
 			return {
 				id: controller.id,
-				text,
-				method: () => toggleState(controller)
+				text: text,
+				method: controller.action
 			}
 		})
 })
 
-function toggleState(controller) {
-	if (controller.action === 'walletAddress') {
-		if (!ethWallet.value) {
-			walletStore.fetchEthRequestAccounts()
-			return
-		}
-		isCheckWalletAddress.value = !isCheckWalletAddress.value
+function buttonsController(action: string) {
+	if (action === 'walletAddress') {
+		ethWallet.value
+			? (isCheckWalletAddress.value = !isCheckWalletAddress.value)
+			: walletStore.fetchEthRequestAccounts()
+
+		return
 	}
 
-	if (controller.action === 'sign') {
-		if (!ethPersonalSign.value) {
-			walletStore.fetchPersonalSign(controller.textChecked, ethWallet.value)
-		}
-		isCheckSign.value = !isCheckSign.value
+	if (action === 'sign' && ethWallet.value) {
+		ethPersonalSign.value
+			? (isCheckSign.value = !isCheckSign.value)
+			: walletStore.fetchPersonalSign('test message', ethWallet.value)
 	}
 }
 
 function formatWalletString(hexString: string, startLength = 4, endLength = 4) {
-	if (hexString.length > startLength + endLength + 2) {
-		const start = hexString.substring(0, startLength + 2)
-		const end = hexString.substring(hexString.length - endLength)
-
-		return `${start}...${end}`
-	}
-	return hexString
+	console.log(hexString)
+	return hexString.length > startLength + endLength + 2
+		? `${hexString.substring(0, startLength + 2)}...${hexString.substring(hexString.length - endLength)}`
+		: hexString
 }
 </script>
 
@@ -107,7 +121,8 @@ function formatWalletString(hexString: string, startLength = 4, endLength = 4) {
 		display: flex;
 		justify-content: flex-end;
 		max-width: em($container-max-width);
-		padding: em(24) em(26);
+		padding: em(24) em(0);
+		margin: 0 auto;
 	}
 
 	&__button {

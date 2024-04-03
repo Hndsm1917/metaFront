@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { fetchEntities, fetchHistory } from '@/services/ethRewardsService'
+import { fetchEntities, fetchHistory } from '@/services/ethRewards'
 import type { Entity } from '@/types/apiTypes'
 import type { FiltersLiterals } from '@/types/types'
 

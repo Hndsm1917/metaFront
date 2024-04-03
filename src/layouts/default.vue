@@ -18,10 +18,17 @@
 import Resize from '@/components/layout/Resize.vue'
 import Header from '@/components/layout/Header.vue'
 import { useWalletStore } from '@/store/wallet'
+import { onBeforeMount } from 'vue'
 
 const walletStore = useWalletStore()
 
-walletStore.init()
+onBeforeMount(() => {
+	walletStore.init().then(() => {
+		if (window.localStorage.getItem('isWalletConnected') === 'true') {
+			walletStore.fetchEthRequestAccounts()
+		}
+	})
+})
 </script>
 
 <style scoped lang="scss">

@@ -1,49 +1,29 @@
 import { defineStore } from 'pinia'
-import { MetaMaskSDK, SDKProvider } from '@metamask/sdk'
+import { ethereumService } from '@/services/ethereum'
 
 interface State {
 	ethWallet: null | string
 	ethPersonalSign: null | string
-	ethereum: any
 }
 
 export const useWalletStore = defineStore('wallet', {
 	state: (): State => ({
 		ethWallet: null,
-		ethPersonalSign: null,
-		ethereum: null
+		ethPersonalSign: null
 	}),
-
-	getters: {},
 
 	actions: {
 		async init() {
-			const sdk = new MetaMaskSDK({
-				dappMetadata: {
-					name: 'metaFront',
-					url: window.location.href
-				},
-				infuraAPIKey: ''
-			})
-
-			sdk.init().then(() => {
-				this.ethereum = sdk.getProvider()
-			})
+			await ethereumService.init()
 		},
 
 		async fetchEthRequestAccounts() {
-			const res = await this.ethereum.request({ method: 'eth_requestAccounts', params: [] })
-
+			const res = await ethereumService.requestAccounts()
 			this.ethWallet = res[0]
 		},
 
 		async fetchPersonalSign(challenge: string, address: string) {
-			const res = await this.ethereum.request({
-				method: 'personal_sign',
-				params: [challenge, address]
-			})
-
-			this.ethPersonalSign = res[0]
+			this.ethPersonalSign = await ethereumService.personalSign(challenge, address)
 		}
 	}
 })
